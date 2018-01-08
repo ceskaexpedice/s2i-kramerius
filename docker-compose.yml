@@ -2,12 +2,11 @@ version: "2"
 services:
   krameriusinit:
     image: moravianlibrary/krameriusinit
+    build: krameriusinit
     environment:
       - krameriusHost=http://kramerius:8080/search
     volumes:
       - k5init:/opt/app-root/src/.kramerius4/import
-    #volumes:
-    #  - /tmp/k5init:/opt/app-root/src/.kramerius4/import
   kramerius:
     image: moravianlibrary/kramerius
     ports:

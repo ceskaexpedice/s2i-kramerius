@@ -1,11 +1,26 @@
 #!/bin/bash -e
 cp -rf /tmp/foxmlinit/*  /opt/app-root/src/.kramerius4/import/
 
-# TODO
-sleep 24
+function isKrameriusUp {
+count=0
+while [ ${count} -lt 64 ]
+echo "Wait for ${krameriusHost}"
+do
+  if curl --head --silent --fail --location --max-time 2 ${krameriusHost} > /dev/null; then
+    echo -n "Kramerius is running..."
+    return 0
+  fi
+  sleep 1
+  let count=${count}+1
+done
+return 1
+}
 
-curl -u krameriusAdmin:krameriusAdmin -H "Content-Type: application/json" -d \
-'{"mapping":{"importDirectory":"/opt/app-root/src/.kramerius4/import/","startIndexer":"true","updateExisting":"true"}}' \
- -X POST $krameriusHost/api/v4.6/processes?def=parametrizedimport
-
+if isKrameriusUp; then
+  curl -u krameriusAdmin:krameriusAdmin -H "Content-Type: application/json" -d \
+  '{"mapping":{"importDirectory":"/opt/app-root/src/.kramerius4/import/","startIndexer":"true","updateExisting":"true"}}' \
+  -X POST $krameriusHost/api/v4.6/processes?def=parametrizedimport
+else
+  echo -n "import failed"
+fi
 
