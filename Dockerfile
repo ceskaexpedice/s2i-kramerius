@@ -31,9 +31,9 @@ RUN INSTALL_PKGS="tar zip" && \
 
 RUN  ln -sf /usr/local/gradle-$GRADLE_VERSION/bin/gradle /usr/local/bin/gradle
 
-RUN curl -v -j -k -fsL -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm > /tmp/jdk-8u131-linux-x64.rpm && \
-    rpm -Uvh /tmp/jdk-8u131-linux-x64.rpm && \
-rm /tmp/jdk-8u131-linux-x64.rpm
+RUN curl -v -j -k -fsL -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-linux-x64.rpm > /tmp/jdk-8u161-linux-x64.rpm && \
+    rpm -Uvh /tmp/jdk-8u161-linux-x64.rpm && \
+rm /tmp/jdk-8u161-linux-x64.rpm
 
 WORKDIR $CATALINA_HOME
 
