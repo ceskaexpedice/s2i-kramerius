@@ -3,7 +3,7 @@ FROM openshift/base-centos7
 MAINTAINER Martin Rumanek <martin@rumanek.cz>
 ENV GRADLE_VERSION=2.12
 ENV TOMCAT_MAJOR 9
-ENV TOMCAT_VERSION 9.0.12
+ENV TOMCAT_VERSION 9.0.16
 ENV CATALINA_HOME /usr/local/tomcat
 ENV JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 
@@ -30,9 +30,8 @@ RUN INSTALL_PKGS="tar zip" && \
 
 RUN  ln -sf /usr/local/gradle-$GRADLE_VERSION/bin/gradle /usr/local/bin/gradle
 
-RUN curl -v -j -k -fsL -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x64.rpm > /tmp/jdk-8u191-linux-x64.rpm && \
-    rpm -Uvh /tmp/jdk-8u191-linux-x64.rpm && \
-rm /tmp/jdk-8u191-linux-x64.rpm
+RUN yum install -y java-1.8.0-openjdk
+RUN yum install -y java-1.8.0-openjdk-devel
 
 WORKDIR $CATALINA_HOME
 
