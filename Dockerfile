@@ -1,9 +1,10 @@
 FROM openshift/base-centos7
+# FROM tomcat:8.5
 
 MAINTAINER Martin Rumanek <martin@rumanek.cz>
-ENV GRADLE_VERSION=2.12
-ENV TOMCAT_MAJOR 9
-ENV TOMCAT_VERSION 9.0.16
+ENV GRADLE_VERSION=4.10
+ENV TOMCAT_MAJOR 8
+ENV TOMCAT_VERSION 8.5.68
 ENV CATALINA_HOME /usr/local/tomcat
 ENV JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 
@@ -30,8 +31,13 @@ RUN INSTALL_PKGS="tar zip" && \
 
 RUN  ln -sf /usr/local/gradle-$GRADLE_VERSION/bin/gradle /usr/local/bin/gradle
 
-RUN yum install -y java-1.8.0-openjdk
-RUN yum install -y java-1.8.0-openjdk-devel
+# RUN curl -v -j -k -fsL -H "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn-pub/java/jdk/8u201-b09/42970487e3af4f5aa5bca3f542482c60/jdk-8u201-linux-x64.rpm > /tmp/jdk-8u201-linux-x64.rpm && \
+#	    rpm -Uvh /tmp/jdk-8u201-linux-x64.rpm && \
+#	rm /tmp/jdk-8u201-linux-x64.rpm
+
+ADD adoptopenjdk.repo /etc/yum.repos.d/adoptopenjdk.repo 
+
+RUN yum install -y adoptopenjdk-8-hotspot
 
 WORKDIR $CATALINA_HOME
 
@@ -40,7 +46,7 @@ RUN  curl -fSL "$TOMCAT_TGZ_URL" -o tomcat.tar.gz && \
 	rm bin/*.bat && \
 	rm tomcat.tar.gz*
 
-RUN curl -fsL "$JDBC_DRIVER_DOWNLOAD_URL" -o $CATALINA_HOME/lib/postgresql-9.4.1208.jar
+RUN curl -fsL "$JDBC_DRIVER_DOWNLOAD_URL" -o $CATALINA_HOME/lib/postgresql-9.4.1212.jar
 
 RUN curl -fsL  https://github.com/ceskaexpedice/kramerius/releases/download/v5.3.6/kramerius-5.3.6.zip -o /tmp/kramerius-5.3.6.zip && \
     unzip /tmp/kramerius-5.3.6.zip -d editors  && \

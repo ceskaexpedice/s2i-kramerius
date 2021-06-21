@@ -3,6 +3,7 @@
   <Realm className="org.apache.catalina.realm.JAASRealm" appName="search" roleClassNames="cz.incad.kramerius.security.jaas.K4RolePrincipal" userClassNames="cz.incad.kramerius.security.jaas.K4User" />
   <Resource name="jdbc/kramerius4" 
             auth="Container" 
+            reloadable="true" 
             type="javax.sql.DataSource" 
             initialSize="3" 
             maxTotal="100"

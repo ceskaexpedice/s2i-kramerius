@@ -19,13 +19,15 @@ LOCAL_SOURCE_DIR=/tmp/src
 
 DEPLOY_DIR=$CATALINA_HOME/webapps/
 
-restore_saved_artifacts
+#restore_saved_artifacts
 
 
-pushd $LOCAL_SOURCE_DIR &> /dev/null
+#pushd $LOCAL_SOURCE_DIR &> /dev/null
+cd $LOCAL_SOURCE_DIR
 
 gradle --no-daemon :search:clean :search:build
-gradle --no-daemon :client:clean :client:build
+gradle --no-daemon :search:build
+#gradle --no-daemon :client:clean :client:build
 
 mkdir -p WEB-INF/lib
 
@@ -35,5 +37,5 @@ mkdir -p WEB-INF/lib
 #zip ./search/build/libs/search.war WEB-INF/lib/solrmigration.jar
 
 mv ./search/build/libs/search.war $DEPLOY_DIR
-mv ./client/build/libs/client.war $DEPLOY_DIR
+#mv ./client/build/libs/client.war $DEPLOY_DIR
 mv ./security-core/build/libs/security-core.jar $CATALINA_HOME/lib/

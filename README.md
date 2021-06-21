@@ -20,6 +20,7 @@ To build Kramerius from your own repo using standalone S2I and then run the resu
 ```
 # use --ref to specify branch/tag
 $ s2i build --incremental=true --exclude="" https://github.com/ceskaexpedice/kramerius.git kramerius-builder moravianlibrary/kramerius
+$ s2i build --incremental=false --exclude="" --ref=kramerius5 https://github.com/ceskaexpedice/kramerius.git kramerius-builder ceskaexpedice/kramerius:5.5.0
 $ docker-compose up -d
 ```
 
